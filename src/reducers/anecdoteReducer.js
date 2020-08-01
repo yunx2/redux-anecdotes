@@ -1,4 +1,4 @@
-import { getAll, addNew } from '../services/anecdotes'
+import { getAll, addNew, updateAnecdote } from '../services/anecdotes'
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
@@ -11,9 +11,12 @@ export const asObject = (anecdoteText) => {
 }
 
 export const vote = id => {
-  return {
-    type: 'INCREMENT_VOTE',
-    data: { id }
+  return async dispatch => {
+    const updatedAnecdote = await updateAnecdote(id)
+    dispatch({
+      type: 'INCREMENT_VOTE',
+      data: updatedAnecdote
+    })
   }
 }
 
@@ -42,17 +45,10 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT':
       return action.data
     case 'INCREMENT_VOTE':
-      console.log('action:', action.type)
-      const anecdoteId = action.data.id
-      const foundAnecdote = state.find(obj => obj.id === anecdoteId)
-      console.log(foundAnecdote)
-      const updatedAnecdote = {
-        ...foundAnecdote,
-        votes: foundAnecdote.votes + 1
-      }
+      const updated = action.data
       const updatedStore = state.map(obj => 
-        obj.id !== anecdoteId ? obj :
-        updatedAnecdote)
+        obj.id !== updated.id ? obj :
+        updated)
       return updatedStore
     case 'NEW_ANECDOTE':
       console.log('action:', action.type)
