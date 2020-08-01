@@ -1,17 +1,24 @@
-const initialValue = 'attention attention attention'
-const notificationReducer = (state = initialValue, action) => {
+
+const notificationReducer = (state = '', action) => {
   switch (action.type) {
-    case 'SET_NOTIFICATION':
-      return 
+    case 'CHANGE_NOTIFICATION':
+      const message = action.data.notification
+      return message
     default:
       return state
   }
 }
 
-export const setNotification = notification => {
+export const changeNotification = notification => {
   return {
-    type: 'SET_NOTIFICATION',
-    notification
+    type: 'CHANGE_NOTIFICATION',
+    data: { notification }
+  }
+}
+
+export const clearNotification = () => {
+  return {
+    type: 'CLEAR_NOTIFICATION',
   }
 }
 export default notificationReducer
