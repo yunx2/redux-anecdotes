@@ -2,9 +2,9 @@ import { getAll, addNew } from '../services/anecdotes'
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
-export const asObject = (anecdote) => {
+export const asObject = (anecdoteText) => {
   return {
-    content: anecdote,
+    content: anecdoteText,
     id: getId(),
     votes: 0
   }
@@ -17,10 +17,13 @@ export const vote = id => {
   }
 }
 
-export const createAnecdote = anecdoteObj => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: anecdoteObj
+export const createAnecdote = anecdoteText => {
+  return async dispatch => {
+    const newAnecdoteObject = await addNew(anecdoteText)
+    dispatch({ 
+      type: 'NEW_ANECDOTE',
+      data: newAnecdoteObject
+    })
   }
 }
 

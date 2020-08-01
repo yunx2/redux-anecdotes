@@ -10,6 +10,5 @@ export const getAll = async () => {
 export const addNew = async anecdoteText => {
   const anecdoteObj = asObject(anecdoteText)
   const response = await axios.post(baseUrl, anecdoteObj)
-  console.log('from addNew:', response.data )
   return response.data // the record added to db
 }

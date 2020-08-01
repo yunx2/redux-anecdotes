@@ -6,16 +6,16 @@ import { addNew } from '../services/anecdotes'
 
 const AnecdoteForm = props => {
   const dispatch = useDispatch()
-  const addAnecdote = async e => {
+  const addAnecdote = e => {
     e.preventDefault()
     const anecdoteText = e.target.anecdote.value
     e.target.anecdote.value = ''
+    dispatch(createAnecdote(anecdoteText))
+
     const message = `you added "${anecdoteText}"`
     dispatch(changeNotification(message))
     setTimeout(() => dispatch(clearNotification()), 5000)
-    const anecdoteObject = await addNew(anecdoteText)
-    dispatch(createAnecdote(anecdoteObject))
-    console.log(anecdoteObject)
+    
   }
   return (
     <div>
