@@ -13,11 +13,10 @@ const getById = async id => {
 }
 
 export const updateAnecdote = async id => {
-  const response = await getById(id)
-  const fetchedAnecdote = response.data
+  const anecdote = await getById(id)
   const updatedAnecdote = {
-    ...fetchedAnecdote, 
-    votes: fetchedAnecdote.votes + 1
+    ...anecdote, 
+    votes: anecdote.votes + 1
   }
   const res = await axios.put(`${baseUrl}/${id}`, updatedAnecdote)
   return res.data
