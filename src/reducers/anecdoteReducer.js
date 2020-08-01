@@ -1,3 +1,5 @@
+import { getAll, addNew } from '../services/anecdotes'
+
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 export const asObject = (anecdote) => {
@@ -22,13 +24,15 @@ export const createAnecdote = anecdoteObj => {
   }
 }
 
-export const initialize = anecdotes => {
-  return {
-    type: 'INIT',
-    data: anecdotes //array of anecdote objects
+export const initialize = () => {
+  return async dispatch => {
+    const anecdotes = await getAll()
+    dispatch({
+      type: 'INIT',
+      data: anecdotes
+    })
   }
 }
-// const initialState = anecdotesAtStart.map(asObject) // looks like this: [{...},{...},{...},{...},{...},{...}]
 
 const anecdoteReducer = (state = [], action) => {
   switch (action.type) {
