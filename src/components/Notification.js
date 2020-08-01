@@ -1,5 +1,4 @@
 import React from 'react'
-import { setNotification } from '../reducers/notificationReducer'
 import { useSelector, } from 'react-redux'
 
 const Notification = () => {
