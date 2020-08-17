@@ -1,29 +1,34 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
-import { search } from '../reducers/searchReducer'
+import { setSearch } from '../reducers/searchReducer'
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const dispatch = useDispatch()
+const Search = (props) => {
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     // input-field value is in variable event.target.value
     const value = event.target.value
     console.log('value:', value)
-    setSearchTerm(value)
-    console.log('search term', searchTerm)
-    dispatch(search(searchTerm))
+    props.setSearch(value)
   }
 
   const style = {
     marginBottom: 10
   }
-
   return (
     <div style={style}>
       filter <input onChange={handleChange} />
     </div>
   )
 }
-export default Search
+
+const mapDispatchToProps = {
+  setSearch
+ }
+
+const ConnectedSearch = connect(
+  null,
+  mapDispatchToProps
+)(Search)
+
+export default ConnectedSearch

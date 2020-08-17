@@ -8,7 +8,7 @@ const searchReducer = (state = '', action) => { // returns an array anecdote obj
   }
 }
 
-export const search = searchTerm => {
+export const setSearch = searchTerm => {
   return {
     type: "SET_SEARCHTERM",
     data: searchTerm

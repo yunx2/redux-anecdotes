@@ -7,12 +7,13 @@ const Anecdote = ({ anecdote, handleVote, changeNotification, clearNotification 
   const { id, votes, content } = anecdote
   const [timerId, setTimerId] = useState(null)
   const message = `you voted for "${content}"`
+
   const setNotification = str => {
-    console.log('previous timer', timerId)
+    // console.log('previous timer', timerId)
     clearTimeout(timerId)
     changeNotification(str)
     setTimerId(setTimeout(() => clearNotification(), 5000))
-    console.log('current timer', timerId)
+    // console.log('current timer', timerId)
   }
   return (
     <li>
@@ -65,6 +66,7 @@ const mapStateToProps = state => {
     anecdotes: (state.searchTerm ? searchResults : state.anecdotes )
   }
 }
+
 const mapDispatchToProps = {
   vote
 }
