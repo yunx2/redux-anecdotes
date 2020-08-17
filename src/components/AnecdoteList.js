@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { vote, setSearchResults } from '../reducers/anecdoteReducer'
+import { vote } from '../reducers/anecdoteReducer'
 import { changeNotification, clearNotification } from '../reducers/notificationReducer'
-import searchReducer from '../reducers/searchReducer'
 
 const Anecdote = ({ anecdote, handleVote, changeNotification, clearNotification }) => {
   const { id, votes, content } = anecdote
+  const [timerId, setTimerId] = useState(null)
   const message = `you voted for "${content}"`
   const setNotification = str => {
+    console.log('previous timer', timerId)
+    clearTimeout(timerId)
     changeNotification(str)
-    setTimeout(() => clearNotification(), 5000)
+    setTimerId(setTimeout(() => clearNotification(), 5000))
+    console.log('current timer', timerId)
   }
   return (
     <li>
@@ -40,7 +43,7 @@ const AnecdoteList = props => {
   return (
     <div>
       <h2>Current Anecdotes</h2>
-      {console.log('store:', props.anecdotes)}
+      {/* {console.log('store:', props.anecdotes)} */}
       <ul>
       {props.anecdotes.map(anecdote => {
         return (
@@ -55,7 +58,7 @@ const AnecdoteList = props => {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+  // console.log(state)
   const searchResults = state.anecdotes.filter(current =>
     current.content.includes(state.searchTerm))
   return {
