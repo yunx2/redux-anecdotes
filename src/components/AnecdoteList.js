@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { vote } from '../reducers/anecdoteReducer'
+import { vote, setSearchResults } from '../reducers/anecdoteReducer'
 import { changeNotification, clearNotification } from '../reducers/notificationReducer'
+import searchReducer from '../reducers/searchReducer'
 
 const Anecdote = ({ anecdote, handleVote, changeNotification, clearNotification }) => {
   const { id, votes, content } = anecdote
@@ -33,16 +34,15 @@ export const ConnectedAnecdote = connect(
 )(Anecdote)
 
 const AnecdoteList = props => {
-  const anecdotes = props.anecdotes
   const incrementVote = id => {
     props.vote(id)
   }
   return (
     <div>
       <h2>Current Anecdotes</h2>
-      {console.log('store:', anecdotes)}
+      {console.log('store:', props.anecdotes)}
       <ul>
-      {anecdotes.map(anecdote => {
+      {props.anecdotes.map(anecdote => {
         return (
           <ConnectedAnecdote
             anecdote={anecdote}
@@ -56,8 +56,10 @@ const AnecdoteList = props => {
 
 const mapStateToProps = state => {
   console.log(state)
+  const searchResults = state.anecdotes.filter(current =>
+    current.content.includes(state.searchTerm))
   return {
-    anecdotes: state.anecdotes
+    anecdotes: (state.searchTerm ? searchResults : state.anecdotes )
   }
 }
 const mapDispatchToProps = {

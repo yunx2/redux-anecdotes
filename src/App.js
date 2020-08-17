@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import AnecdoteForm from './components/AnecdoteForm'
 import ConnectedAnecdoteList from './components/AnecdoteList'
 import Notification from './components/Notification'
+import Search from './components/Search'
 import { useDispatch } from 'react-redux'
 import { initialize } from './reducers/anecdoteReducer'
 
@@ -16,6 +17,7 @@ const App = () => {
     <div>
       <Notification />
       <h2>Anecdotes</h2>
+      <Search />
       <AnecdoteForm />
       <ConnectedAnecdoteList />
     </div>

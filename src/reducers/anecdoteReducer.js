@@ -20,6 +20,12 @@ export const vote = id => {
   }
 }
 
+export const setSearchResults = results => {
+  return {
+    type: 'SET_SEARCH_RESULTS',
+    data: results
+  }
+}
 export const createAnecdote = anecdoteText => {
   return async dispatch => {
     const newAnecdoteObject = await addNew(anecdoteText)
@@ -55,6 +61,9 @@ const anecdoteReducer = (state = [], action) => {
       const newAnecdoteObj = action.data
       const updatedAnecdotes = [...state, newAnecdoteObj]
       return updatedAnecdotes
+    case 'SET_SEARCH_RESULTS': 
+        const results = action.data
+        return results
     default:
       return state
   }
